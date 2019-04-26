@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  flask:
+    build: ./flask
+    volumes:
+      - ./flask/app:/usr/src/app
+    ports: 
+      - 5000:8080
+  
