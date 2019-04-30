@@ -3,6 +3,7 @@ FROM python:latest
 RUN apt-get update && apt-get install -y
 RUN pip install Flask
 RUN pip install flask-restful
+RUN pip install neo4j
 
 RUN useradd -ms /bin/bash/ microservice
 

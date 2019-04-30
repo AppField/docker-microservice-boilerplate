@@ -1,10 +1,23 @@
 version: '3'
 
-services:
+services: 
+  neo4j:
+    image: neo4j:latest
+    network_mode: "bridge"
+    environment:
+      - NEO4J_PASSWORD=Start1234
+      - NEO4J_AUTH=neo4j/Start1234
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - ./neo4j/plugins:/plugins
+      - ./neo4j/data:/data
+      - ./neo4j/logs:/logs
+      - ./neo4j/import:/import  
   flask:
     build: ./flask
     volumes:
       - ./flask/app:/usr/src/app
     ports: 
       - 5000:8080
-  
