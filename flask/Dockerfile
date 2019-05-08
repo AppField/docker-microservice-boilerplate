@@ -1,19 +1,23 @@
-FROM python:latest
+FROM python:3.7-alpine as base
 
-RUN apt-get update && apt-get install -y
-RUN pip install Flask
-RUN pip install flask-restful
-RUN pip install neo4j
+FROM base as builder
 
-RUN useradd -ms /bin/bash/ microservice
+RUN mkdir /install
+WORKDIR /install
 
-USER microservice
+COPY requirements.txt /requirements.txt
 
+RUN pip install --install-option="--prefix=/install" -r /requirements.txt
+
+FROM base
+
+COPY --from=builder /install /usr/local
 COPY ./app /usr/src/app
 
 WORKDIR /usr/src/app
 
-
+RUN adduser -D microservice
+USER microservice
 
 CMD ["python", "api.py"]
 
